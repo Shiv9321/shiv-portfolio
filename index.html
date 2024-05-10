@@ -1,0 +1,158 @@
+<!-- light="type: point -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interactive A-Frame Scene</title>
+        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+        <script src="https://unpkg.com/aframe-extras@9.1.0/dist/aframe-extras.min.js"></script>
+        <link rel="icon" href="/stary-night.ico" type="image/x-icon">
+    </head>
+    <body>
+
+        <a-scene>
+                <a-entity position="0 2 0">
+                        <a-sphere position="0 0.55 0" radius="0.1" color="#FFFF88"
+                                light="type: point; intensity: 1.6; distance: 30;
+                                decay: 2; color: #FFFF88;">
+                        </a-sphere>
+                        <a-cylinder radius="0.2" height="1" position="0 0 0" color="blue">
+                        </a-cylinder>
+                </a-entity>
+
+                        <!-- at top-right -->
+                <a-cone position="20 2.5 -20" rotation="0 0 0" color="blue" radius="1.2"
+                                class="clickable" id="top-right-cone-top"
+                                light="type: point; intensity: 1.15; distance: 30;
+                                decay: 2; color: #FFFF88;">
+                </a-cone>
+                <a-cone position="20 1.5 -20" rotation="180 0 0" color="blue" radius="1.2"
+                                class="clickable" id="top-right-cone-bottom"
+                                light="type: point; intensity: 1.15; distance: 30;
+                                decay: 2; color: #FFFF88;">
+                </a-cone>
+                <a-text value="PROJECT - ADJUSTABLE CLOCK" position="18 5.2 -20" color="#FFFFFF"
+                        rotation="0 0 0" width="20" id="project-1-text">
+                </a-text>
+                <a-text id="hit-enter-text-1" value="(hit enter)"
+                        position="18 4 -20" color="#FFFFFF"
+                        rotation="0 0 0" width="12" visible="false">
+                </a-text>
+
+                          <!-- at top-left -->
+                <a-cone position="-20 2.5 -20" rotation="0 0 0" color="blue" radius="1.2"
+                                class="clickable" id="top-left-cone-top"
+                                light="type: point; intensity: 1.15; distance: 30;
+                                        decay: 2; color: #FFFF88;">
+                </a-cone>
+                <a-cone position="-20 1.5 -20" rotation="180 0 0" color="blue" radius="1.2"
+                                class="clickable" id="top-left-cone-bottom"
+                                light="type: point; intensity: 1.15; distance: 30;
+                                        decay: 2; color: #FFFF88;">
+                </a-cone>
+
+                <a-text value="PROJECT - ENIGMA(web3)" position="-22 4.2 -22" color="#FFFFFF"
+                        rotation="0 0 0" width="20" id="project-2-text">
+                </a-text>
+
+                <a-text id="hit-enter-text-2" value="(hit enter)"
+                        position="-18 3.2 -20" color="#FFFFFF"
+                        rotation="0 0 0" width="12" visible="false">
+                </a-text>
+
+                        <!-- at bottom-left -->
+                <a-cone position="-20 2.5 20" rotation="0 0 0" color="blue" radius="1.2"
+                                class="clickable" id="bottom-left-cone-top"
+                                light="type: point; intensity: 1.15; distance: 30;
+                                    decay: 2; color: #FFFF88;">
+                </a-cone>
+                <a-cone position="-20 1.5 20" rotation="180 0 0" color="blue" radius="1.2"
+                                class="clickable" id="bottom-left-cone-bottom"
+                                light="type: point; intensity: 1.15; distance: 30;
+                                    decay: 2; color: #FFFF88;">
+                </a-cone>
+
+                <!-- <a-text value="PORTFOLIO" position="10 4.2 18" color="#FFFFFF"
+                        rotation="0 0 0" width="20" id="project-3-text">
+                </a-text>
+
+                <a-text id="hit-enter-text-3" value="(hit enter)"
+                        position="-18 3.2 20" color="#FFFFFF"
+                        rotation="0 0 0" width="12" visible="false">
+                </a-text> -->
+
+                        <!-- at bottom-right -->
+                <a-cone position="20 2.5 20" rotation="0 0 0" color="blue" radius="1.2"
+                            class="clickable" id="bottom-right-cone-top"
+                            light="type: point; intensity: 1.15; distance: 30;
+                                    decay: 2; color: #FFFF88;">
+                </a-cone>
+                <a-cone position="20 1.5 20" rotation="180 0 0" color="blue" radius="1.2"
+                                class="clickable" id="bottom-right-cone-left"
+                                light="type: point; intensity: 1.15; distance: 30;
+                                        decay: 2; color: #FFFF88;">
+                </a-cone>
+
+                <!-- <a-text value="ABOUT" position="0 4.2 0" color="#FFFFFF"
+                        rotation="0 0 0" width="20" id="project-4-text">
+                </a-text>
+
+                <a-text id="hit-enter-text-4" value="(hit enter)"
+                        position="-18 3.3 -20" color="#FFFFFF"
+                        rotation="0 0 0" width="12" visible="false">
+                </a-text> -->
+
+                <a-plane position="0 0 0" rotation="-90 0 0"
+                    width="50" height="50" color="#7BC8A4">
+                </a-plane>
+
+                <a-camera id="camera" position="-1 2 10"
+                        look-controls>
+                </a-camera>
+
+                <!-- <a-camera id="camera" position="17 2.5 -17"></a-camera> -->
+
+                <a-sky color="#454d5c"></a-sky>
+
+        </a-scene>
+
+        <script src="./scripts/camera_boundaries.js"></script>
+
+        <script src="./scripts/camera_restrict.js">
+        </script>
+
+        <script src="./scripts/camera_restrict2.js">
+        </script>
+
+                <!-- FOR PROJECT 1 -->
+        <script src="./scripts/project1.js">
+        </script>
+
+                <!-- FOR PROJECT 2 -->
+        <script src="./scripts/project2.js">
+        </script>
+
+                <!-- FOR PROJECT 3 -->
+        <!-- <script src="./scripts/project3.js">
+        </script> -->
+
+                <!-- FOR PROJECT 4 -->
+        <!-- <script src="./scripts/project4.js">
+        </script> -->
+
+                <!-- FOR HIT ENTER -->
+        <script src="./scripts/hit_enter_1.js">
+        </script>
+
+        <script src="./scripts/hit_enter_2.js">
+        </script>
+
+        <!-- <script src="./scripts/hit_enter_3.js">
+        </script> -->
+
+        <!-- <script src="./scripts/hit_enter_4.js">
+        </script> -->
+
+    </body>
+</html>
