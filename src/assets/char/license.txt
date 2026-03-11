@@ -1,0 +1,11 @@
+Model Information:
+* title:	【Anime Character】Souta (Free / Unity 3D)
+* source:	https://sketchfab.com/3d-models/anime-charactersouta-free-unity-3d-fa79710a9b7b4bf79fe4bf63edd8cfd8
+* author:	3D動漫風角色屋 3D Anime Character Store (https://sketchfab.com/alex94i60)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "【Anime Character】Souta (Free / Unity 3D)" (https://sketchfab.com/3d-models/anime-charactersouta-free-unity-3d-fa79710a9b7b4bf79fe4bf63edd8cfd8) by 3D動漫風角色屋 3D Anime Character Store (https://sketchfab.com/alex94i60) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
