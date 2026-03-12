@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { ThreeSceneService } from '../three-service.service';
-import RAPIER from '@dimforge/rapier3d-compat';
+import { CharacterControllerService } from '../character-controller.service';
 
 @Component({
   selector: 'app-second-corner',
@@ -12,11 +12,14 @@ import RAPIER from '@dimforge/rapier3d-compat';
 export class SecondCornerComponent implements OnInit {
 
   private hoverText!: HTMLDivElement;
-  private link = 'https://clockadjustable.netlify.app/';
+  private link = 'https://github.com/Shiv9321';
 
   private sphere!: THREE.Mesh;
 
-  constructor(private threeService: ThreeSceneService) {}
+  constructor(
+    private threeService: ThreeSceneService,
+    private controller: CharacterControllerService
+  ) {}
 
   ngOnInit(): void {
 
@@ -29,65 +32,57 @@ export class SecondCornerComponent implements OnInit {
         this.createHoverText();
         this.animate();
       }
-
     }, 100);
   }
 
-  createSphere() {
-
+  createSphere() 
+  {
     const geometry = new THREE.SphereGeometry(1.2, 32, 32);
-    const material = new THREE.MeshStandardMaterial({ color: 0xa61228 });
+    const material = new THREE.MeshStandardMaterial({ color: 0x26d153 });
 
-    const sphere = new THREE.Mesh(geometry, material);
-    this.sphere = sphere;
-
+    this.sphere = new THREE.Mesh(geometry, material);
     const position = new THREE.Vector3(3.5, 1.5, -2.5);
-
-    sphere.position.copy(position);
+    this.sphere.position.copy(position);
 
     this.threeService.addDynamicSphere(
-      sphere,
+      this.sphere,
       1.2,
       position
     );
   }
 
-  createHoverText() {
-
+  createHoverText() 
+  {
     this.hoverText = document.createElement('div');
+    this.hoverText.innerText = 'Press ENTER to open github.com/Shiv9321';
 
-    this.hoverText.innerText = 'Press ENTER to open clockadjustable.netlify.app';
-
-    this.hoverText.style.position = 'absolute';
-    this.hoverText.style.bottom = '80px';
-    this.hoverText.style.left = '50%';
-    this.hoverText.style.transform = 'translateX(-50%)';
-    this.hoverText.style.color = 'white';
-    this.hoverText.style.fontSize = '20px';
-    this.hoverText.style.display = 'none';
-    this.hoverText.style.pointerEvents = 'none';
-
+    Object.assign(this.hoverText.style, {
+        position: 'absolute',
+        bottom: '80px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        color: 'white',
+        fontSize: '20px',
+        display: 'none',
+        pointerEvents: 'none'
+    });
     document.body.appendChild(this.hoverText);
   }
 
-  checkInteraction() {
-
-    const characterPos = this.threeService.getCharacterPosition();
+  checkInteraction() 
+  {
+    const characterPos = this.controller.getCharacterPosition();
 
     if (!characterPos || !this.sphere) return;
 
     const distance = characterPos.distanceTo(this.sphere.position);
-
     const inRange = distance < 2.5;
 
-    if (inRange)
-      this.hoverText.style.display = 'block';
-    else
-      this.hoverText.style.display = 'none';
+    this.hoverText.style.display = inRange ? 'block' : 'none';
 
-    if (inRange && this.threeService.isKeyPressed('enter'))
+    if (inRange && this.controller.isKeyPressed('enter'))
     {
-      this.threeService.resetKey('enter');
+      this.controller.resetKey('enter');
       window.open(this.link, '_blank');
     }
   }

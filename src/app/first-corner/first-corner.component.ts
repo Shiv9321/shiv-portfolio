@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { ThreeSceneService } from '../three-service.service';
+import { CharacterControllerService } from '../character-controller.service';
 
 @Component({
   selector: 'app-first-corner',
@@ -16,7 +17,10 @@ export class FirstCornerComponent implements OnInit {
 
   private sphere!: THREE.Mesh;
 
-  constructor(private threeService: ThreeSceneService) {}
+  constructor(
+    private threeService: ThreeSceneService,
+    private controller: CharacterControllerService
+  ) {}
 
   ngOnInit(): void {
 
@@ -25,6 +29,7 @@ export class FirstCornerComponent implements OnInit {
       if (this.threeService.ready)
       {
         clearInterval(wait);
+
         this.createSphere();
         this.createHoverText();
         this.animate();
@@ -36,17 +41,17 @@ export class FirstCornerComponent implements OnInit {
   createSphere() {
 
     const geometry = new THREE.SphereGeometry(1.2, 32, 32);
+
     const material = new THREE.MeshStandardMaterial({ color: 0x5865F2 });
 
-    const sphere = new THREE.Mesh(geometry, material);
-    this.sphere = sphere;
+    this.sphere = new THREE.Mesh(geometry, material);
 
     const position = new THREE.Vector3(-3.5, 1.5, -2.5);
 
-    sphere.position.copy(position);
+    this.sphere.position.copy(position);
 
     this.threeService.addDynamicSphere(
-      sphere,
+      this.sphere,
       1.2,
       position
     );
@@ -58,21 +63,23 @@ export class FirstCornerComponent implements OnInit {
 
     this.hoverText.innerText = 'Press ENTER to open udsa.netlify.app';
 
-    this.hoverText.style.position = 'absolute';
-    this.hoverText.style.bottom = '80px';
-    this.hoverText.style.left = '50%';
-    this.hoverText.style.transform = 'translateX(-50%)';
-    this.hoverText.style.color = 'white';
-    this.hoverText.style.fontSize = '20px';
-    this.hoverText.style.display = 'none';
-    this.hoverText.style.pointerEvents = 'none';
+    Object.assign(this.hoverText.style, {
+      position: 'absolute',
+      bottom: '80px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      color: 'white',
+      fontSize: '20px',
+      display: 'none',
+      pointerEvents: 'none'
+    });
 
     document.body.appendChild(this.hoverText);
   }
 
   checkInteraction() {
 
-    const characterPos = this.threeService.getCharacterPosition();
+    const characterPos = this.controller.getCharacterPosition();
 
     if (!characterPos || !this.sphere) return;
 
@@ -80,20 +87,20 @@ export class FirstCornerComponent implements OnInit {
 
     const inRange = distance < 2.5;
 
-    if (inRange)
-      this.hoverText.style.display = 'block';
-    else
-      this.hoverText.style.display = 'none';
+    this.hoverText.style.display = inRange ? 'block' : 'none';
 
-    if (inRange && this.threeService.isKeyPressed('enter'))
+    if (inRange && this.controller.isKeyPressed('enter'))
     {
-      this.threeService.resetKey('enter');
+      this.controller.resetKey('enter');
+
       window.open(this.link, '_blank');
     }
   }
 
   animate = () => {
+
     requestAnimationFrame(this.animate);
+
     this.checkInteraction();
   }
 

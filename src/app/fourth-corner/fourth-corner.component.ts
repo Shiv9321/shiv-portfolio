@@ -1,100 +1,96 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { ThreeSceneService } from '../three-service.service';
-import RAPIER from '@dimforge/rapier3d-compat';
+import { CharacterControllerService } from '../character-controller.service';
 
 @Component({
   selector: 'app-fourth-corner',
   templateUrl: './fourth-corner.component.html',
   styleUrl: './fourth-corner.component.sass'
 })
+
 export class FourthCornerComponent implements OnInit {
 
-
     private hoverText!: HTMLDivElement;
-    private link = 'https://github.com/Shiv9321';
+    private link = 'https://ghu-info.netlify.app/';
 
-       private sphere!: THREE.Mesh;
+    private sphere!: THREE.Mesh;
 
-       constructor(private threeService: ThreeSceneService) {}
+    constructor(
+      private threeService: ThreeSceneService,
+      private controller: CharacterControllerService
+    ) {}
 
-       ngOnInit(): void {
+    ngOnInit(): void {
 
-         const wait = setInterval(() => {
+      const wait = setInterval(() => {
 
-           if (this.threeService.ready)
-           {
-             clearInterval(wait);
-             this.createSphere();
-             this.createHoverText();
-             this.animate();
-           }
+        if (this.threeService.ready)
+        {
+          clearInterval(wait);
+          this.createSphere();
+          this.createHoverText();
+          this.animate();
+        }
+      }, 100);
+    }
 
-         }, 100);
-       }
+    createSphere()
+    {
+      const geometry = new THREE.SphereGeometry(1.2, 32, 32);
+      const material = new THREE.MeshStandardMaterial({ color: 0xd5e645  });
 
-       createSphere() {
+      this.sphere = new THREE.Mesh(geometry, material);
+      const position = new THREE.Vector3(-3.5, 1.5, 2.5);
+      this.sphere.position.copy(position);
 
-         const geometry = new THREE.SphereGeometry(1.2, 32, 32);
-         const material = new THREE.MeshStandardMaterial({ color: 0xc7c73a });
+      this.threeService.addDynamicSphere(
+        this.sphere,
+        1.2,
+        position
+      );
+    }
 
-         const sphere = new THREE.Mesh(geometry, material);
-         this.sphere = sphere;
+    createHoverText()
+    {
+      this.hoverText = document.createElement('div');
+      this.hoverText.innerText = 'Press ENTER to open ghu-info.netlify.app/';
 
-         const position = new THREE.Vector3(-1.5, 1.5, 3.5);
+      Object.assign(this.hoverText.style, {
+        position: 'absolute',
+        bottom: '80px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        color: 'white',
+        fontSize: '20px',
+        display: 'none',
+        pointerEvents: 'none'
+      });
 
-         sphere.position.copy(position);
+      document.body.appendChild(this.hoverText);
+    }
 
-         this.threeService.addDynamicSphere(
-           sphere,
-           1.2,
-           position
-         );
-       }
+    checkInteraction()
+    {
+      const characterPos = this.controller.getCharacterPosition();
 
-       createHoverText() {
+      if (!characterPos || !this.sphere) return;
+        const distance = characterPos.distanceTo(this.sphere.position);
 
-         this.hoverText = document.createElement('div');
+      const inRange = distance < 2.5;
 
-         this.hoverText.innerText = 'Press ENTER to open github.com/Shiv9321';
+      this.hoverText.style.display = inRange ? 'block' : 'none';
 
-         this.hoverText.style.position = 'absolute';
-         this.hoverText.style.bottom = '80px';
-         this.hoverText.style.left = '50%';
-         this.hoverText.style.transform = 'translateX(-50%)';
-         this.hoverText.style.color = 'white';
-         this.hoverText.style.fontSize = '20px';
-         this.hoverText.style.display = 'none';
-         this.hoverText.style.pointerEvents = 'none';
+      if (inRange && this.controller.isKeyPressed('enter'))
+      {
+        this.controller.resetKey('enter');
+        window.open(this.link, '_blank');
+      }
+    }
 
-         document.body.appendChild(this.hoverText);
-       }
+    animate = () => {
+      requestAnimationFrame(this.animate);
+      this.checkInteraction();
+    }
 
-       checkInteraction() {
-
-         const characterPos = this.threeService.getCharacterPosition();
-
-         if (!characterPos || !this.sphere) return;
-
-         const distance = characterPos.distanceTo(this.sphere.position);
-
-         const inRange = distance < 2.5;
-
-         if (inRange)
-           this.hoverText.style.display = 'block';
-         else
-           this.hoverText.style.display = 'none';
-
-         if (inRange && this.threeService.isKeyPressed('enter'))
-         {
-           this.threeService.resetKey('enter');
-           window.open(this.link, '_blank');
-         }
-       }
-
-       animate = () => {
-         requestAnimationFrame(this.animate);
-         this.checkInteraction();
-       }
-
-     }
+}

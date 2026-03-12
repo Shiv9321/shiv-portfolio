@@ -47,7 +47,8 @@ export class PlatformComponent implements OnInit {
       wallMaterial
     );
     backSideWall.position.set(0, 0.5, -7.3);
-    this.threeService.addPhysicsObject(backSideWall, backSideWallSize, backSideWall.position);
+    this.threeService.addPhysicsObject
+    (backSideWall, backSideWallSize, backSideWall.position);
 
     // FRONT WALL----------------------------------------------------------------------------
     const frontSideWallSize = new THREE.Vector3(14.5, 1, 0.1);
@@ -57,7 +58,8 @@ export class PlatformComponent implements OnInit {
     );
 
     frontSideWall.position.set(0, 0.5, 7.3);
-    this.threeService.addPhysicsObject(frontSideWall,frontSideWallSize,frontSideWall.position);
+    this.threeService.addPhysicsObject
+    (frontSideWall,frontSideWallSize,frontSideWall.position);
 
     //RIGHT WALL----------------------------------------------------------------------------
     const rightSideWallSize = new THREE.Vector3(0.1, 3, 14.5);
@@ -66,7 +68,8 @@ export class PlatformComponent implements OnInit {
         wallMaterial
     );
     rightSideWall.position.set(7.3, 1.5, 0);
-    this.threeService.addPhysicsObject(rightSideWall,rightSideWallSize,rightSideWall.position);
+    this.threeService.addPhysicsObject
+    (rightSideWall,rightSideWallSize,rightSideWall.position);
 
     //LEFT WALL----------------------------------------------------------------------------
     const leftSideWallSize = new THREE.Vector3(0.1, 3, 14.5);
@@ -75,6 +78,7 @@ export class PlatformComponent implements OnInit {
         wallMaterial
     );
     leftSideWall.position.set(-7.3, 1.5, 0);
-    this.threeService.addPhysicsObject(leftSideWall,leftSideWallSize,leftSideWall.position);
+    this.threeService.addPhysicsObject
+    (leftSideWall,leftSideWallSize,leftSideWall.position);
   }
 }

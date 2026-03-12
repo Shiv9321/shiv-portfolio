@@ -7,6 +7,7 @@ import { ThreeSceneService } from '../three-service.service';
   templateUrl: './sky.component.html',
   styleUrl: './sky.component.sass'
 })
+
 export class SkyComponent implements OnInit {
 
   constructor(private threeService: ThreeSceneService) {}
