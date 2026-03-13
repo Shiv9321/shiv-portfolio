@@ -35,9 +35,9 @@ export class ThirdCornerComponent implements OnInit {
     }, 100);
   }
 
-  createSphere() 
+  createSphere()
   {
-    const geometry = new THREE.SphereGeometry(1.2, 32, 32);
+    const geometry = new THREE.SphereGeometry(0.8, 9, 2);
     const material = new THREE.MeshStandardMaterial({ color: 0xa80c30 });
 
     this.sphere = new THREE.Mesh(geometry, material);
@@ -51,7 +51,7 @@ export class ThirdCornerComponent implements OnInit {
     );
   }
 
-  createHoverText() 
+  createHoverText()
   {
     this.hoverText = document.createElement('div');
     this.hoverText.innerText = 'Press ENTER to open clockadjustable.netlify.app/';
@@ -69,7 +69,7 @@ export class ThirdCornerComponent implements OnInit {
     document.body.appendChild(this.hoverText);
   }
 
-  checkInteraction() 
+  checkInteraction()
   {
     const characterPos = this.controller.getCharacterPosition();
     if (!characterPos || !this.sphere) return;

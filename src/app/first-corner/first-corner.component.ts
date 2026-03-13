@@ -40,7 +40,7 @@ export class FirstCornerComponent implements OnInit {
 
   createSphere() {
 
-    const geometry = new THREE.SphereGeometry(1.2, 32, 32);
+    const geometry = new THREE.SphereGeometry(1.2, 9, 2);
 
     const material = new THREE.MeshStandardMaterial({ color: 0x5865F2 });
 

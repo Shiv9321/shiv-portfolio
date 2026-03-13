@@ -20,11 +20,13 @@ export class PlatformComponent implements OnInit {
       return;
     }
 
-    // PLATFORM -------------------------------------------------------------------------
+    // PLATFORM -----------------------------------------------------
 
     const platform = new THREE.Mesh(
       new THREE.BoxGeometry(15, 0.05, 15),
-      new THREE.MeshStandardMaterial({ color: 0x735d6c })
+      new THREE.MeshStandardMaterial({
+        color: 0x28213b
+      })
     );
 
     platform.position.set(0, 0, 0);
@@ -35,50 +37,62 @@ export class PlatformComponent implements OnInit {
       platform.position
     );
 
-    // WALLS -------------------------------------------------------------------------
+    // CURVED STADIUM WALL (VISUAL) --------------------------------
 
-    //Walls Color
-    const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x85a4d6});
+    const wallHeight = 1.1;
+    const bottomRadius = 7;
+    const topRadius = 6;
+    const segments = 64;
 
-    // BACK WALL----------------------------------------------------------------------------
-    const backSideWallSize = new THREE.Vector3(14.5, 1, 0.1);
-    const backSideWall = new THREE.Mesh(
-      new THREE.BoxGeometry(backSideWallSize.x, backSideWallSize.y, backSideWallSize.z),
+    const wallMaterial = new THREE.MeshStandardMaterial({
+      color: 0x5a96c4,
+      side: THREE.DoubleSide
+    });
+
+    const stadiumWall = new THREE.Mesh(
+      new THREE.CylinderGeometry(
+        topRadius,
+        bottomRadius,
+        wallHeight,
+        segments,
+        1,
+        true
+      ),
       wallMaterial
     );
-    backSideWall.position.set(0, 0.5, -7.3);
-    this.threeService.addPhysicsObject
-    (backSideWall, backSideWallSize, backSideWall.position);
 
-    // FRONT WALL----------------------------------------------------------------------------
-    const frontSideWallSize = new THREE.Vector3(14.5, 1, 0.1);
-    const frontSideWall = new THREE.Mesh(
-      new THREE.BoxGeometry(frontSideWallSize.x, frontSideWallSize.y, frontSideWallSize.z),
-      wallMaterial
-    );
+    stadiumWall.position.set(0, wallHeight / 2, 0);
 
-    frontSideWall.position.set(0, 0.5, 7.3);
-    this.threeService.addPhysicsObject
-    (frontSideWall,frontSideWallSize,frontSideWall.position);
+    this.threeService.scene.add(stadiumWall);
 
-    //RIGHT WALL----------------------------------------------------------------------------
-    const rightSideWallSize = new THREE.Vector3(0.1, 3, 14.5);
-    const rightSideWall = new THREE.Mesh(
-        new THREE.BoxGeometry(rightSideWallSize.x, rightSideWallSize.y, rightSideWallSize.z),
-        wallMaterial
-    );
-    rightSideWall.position.set(7.3, 1.5, 0);
-    this.threeService.addPhysicsObject
-    (rightSideWall,rightSideWallSize,rightSideWall.position);
+    // PHYSICS WALL COLLIDERS --------------------------------------
 
-    //LEFT WALL----------------------------------------------------------------------------
-    const leftSideWallSize = new THREE.Vector3(0.1, 3, 14.5);
-    const leftSideWall = new THREE.Mesh(
-        new THREE.BoxGeometry(leftSideWallSize.x, leftSideWallSize.y, leftSideWallSize.z),
-        wallMaterial
-    );
-    leftSideWall.position.set(-7.3, 1.5, 0);
-    this.threeService.addPhysicsObject
-    (leftSideWall,leftSideWallSize,leftSideWall.position);
+    const colliderCount = 40;
+    const radius = bottomRadius;
+
+    for (let i = 0; i < colliderCount; i++) {
+
+      const angle = (i / colliderCount) * Math.PI * 2;
+
+      const x = Math.sin(angle) * radius;
+      const z = Math.cos(angle) * radius;
+
+      const wallSize = new THREE.Vector3(2, wallHeight, 1);
+
+      const collider = new THREE.Mesh(
+        new THREE.BoxGeometry(wallSize.x, wallSize.y, wallSize.z),
+        new THREE.MeshBasicMaterial({ visible: false })
+      );
+
+      collider.position.set(x, wallHeight / 2, z);
+
+      collider.lookAt(0, wallHeight / 2, 0);
+
+      this.threeService.addPhysicsObject(
+        collider,
+        wallSize,
+        collider.position
+      );
+    }
   }
 }

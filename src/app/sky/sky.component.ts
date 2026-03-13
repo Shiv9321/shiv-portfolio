@@ -34,8 +34,8 @@ export class SkyComponent implements OnInit {
     const starGeometry = new THREE.BufferGeometry();
     const positions: number[] = [];
 
-    for (let i = 0; i < starCount; i++) {
-
+    for (let i = 0; i < starCount; i++)
+    {
       const x = (Math.random() - 0.6) * 400;
       const y = Math.random() * 1000 - 100;
       const z = (Math.random() - 0.7) * 400;

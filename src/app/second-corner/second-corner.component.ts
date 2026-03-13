@@ -35,9 +35,9 @@ export class SecondCornerComponent implements OnInit {
     }, 100);
   }
 
-  createSphere() 
+  createSphere()
   {
-    const geometry = new THREE.SphereGeometry(1.2, 32, 32);
+    const geometry = new THREE.SphereGeometry(1, 9, 2);
     const material = new THREE.MeshStandardMaterial({ color: 0x26d153 });
 
     this.sphere = new THREE.Mesh(geometry, material);
@@ -51,7 +51,7 @@ export class SecondCornerComponent implements OnInit {
     );
   }
 
-  createHoverText() 
+  createHoverText()
   {
     this.hoverText = document.createElement('div');
     this.hoverText.innerText = 'Press ENTER to open github.com/Shiv9321';
@@ -69,7 +69,7 @@ export class SecondCornerComponent implements OnInit {
     document.body.appendChild(this.hoverText);
   }
 
-  checkInteraction() 
+  checkInteraction()
   {
     const characterPos = this.controller.getCharacterPosition();
 

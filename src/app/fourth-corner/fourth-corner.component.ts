@@ -37,7 +37,7 @@ export class FourthCornerComponent implements OnInit {
 
     createSphere()
     {
-      const geometry = new THREE.SphereGeometry(1.2, 32, 32);
+      const geometry = new THREE.SphereGeometry(0.6, 9, 2);
       const material = new THREE.MeshStandardMaterial({ color: 0xd5e645  });
 
       this.sphere = new THREE.Mesh(geometry, material);
